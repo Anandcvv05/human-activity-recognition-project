@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Flask
+instance/
+.webassets-cache/
+
+# Upload folders
+uploads/
+temp/
+tmp/
+
+# Dataset / training data
+dataset/
+data/
+datasets/
+
+# Video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Image files (optional datasets)
+*.png
+*.jpg
+*.jpeg
+
+# Keep model files needed for deployment
+# (Do NOT ignore .h5 / .keras if Render needs them)
+
+# Other model artifacts
+*.pb
+*.ckpt
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build files
+dist/
+build/
+*.egg-info/
+
+# Cache
+.cache/

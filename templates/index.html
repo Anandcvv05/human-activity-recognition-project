@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Arena</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="bg-blur bg1"></div>
+    <div class="bg-blur bg2"></div>
+    <div class="bg-blur bg3"></div>
+
+    <div class="page">
+        <div class="card">
+            <div class="header">
+                <div class="badge">Action Arena AI</div>
+                <h1>HUMAN ACTIVITY RECOGNITION</h1>
+                <p class="subtitle">
+                    Upload a video and let the model guess the action.
+                </p>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" class="upload-form">
+                <div class="file-group">
+                    <label for="video" class="file-label">Choose Your Video</label>
+                    <input type="file" id="video" name="video" accept=".mp4,.avi,.mov" required>
+                </div>
+
+                <button type="submit" class="predict-btn">⚡ Detect Action</button>
+            </form>
+
+            {% if error %}
+                <div class="alert error-box">{{ error }}</div>
+            {% endif %}
+
+            {% if warning %}
+                <div class="alert warning-box">{{ warning }}</div>
+            {% endif %}
+
+            {% if prediction %}
+                <div class="result-card">
+                    <div class="result-top">
+                        <span class="result-label">🏆 Predicted Action</span>
+                        <span class="confidence-badge">
+                            Confidence: {{ "%.2f"|format(confidence * 100) }}%
+                        </span>
+                    </div>
+                    <h2>{{ prediction }}</h2>
+                </div>
+            {% endif %}
+
+            {% if video_filename %}
+                <div class="video-section">
+                    <div class="section-title">🎥 Uploaded Video</div>
+                    <div class="video-wrapper">
+                        <video id="uploadedVideo" controls preload="metadata">
+                            {% if video_ext == "mp4" %}
+                                <source src="{{ url_for('uploaded_file', filename=video_filename) }}" type="video/mp4">
+                            {% elif video_ext == "avi" %}
+                                <source src="{{ url_for('uploaded_file', filename=video_filename) }}" type="video/x-msvideo">
+                            {% elif video_ext == "mov" %}
+                                <source src="{{ url_for('uploaded_file', filename=video_filename) }}" type="video/quicktime">
+                            {% else %}
+                                <source src="{{ url_for('uploaded_file', filename=video_filename) }}">
+                            {% endif %}
+                            Your browser does not support the video tag.
+                        </video>
+
+                        <div class="video-actions">
+                            <button type="button" class="play-btn" onclick="playVideo()">▶ Play</button>
+                            <button type="button" class="secondary-btn" onclick="pauseVideo()">⏸ Pause</button>
+                            <button type="button" class="secondary-btn" onclick="restartVideo()">↺ Replay</button>
+                        </div>
+
+                        <p class="video-note">
+                            Supports <strong>MP4, AVI, MOV</strong>. Best browser playback is usually <strong>MP4</strong>.
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function playVideo() {
+            const video = document.getElementById("uploadedVideo");
+            if (video) {
+                video.play().catch((error) => {
+                    console.log("Play failed:", error);
+                });
+            }
+        }
+
+        function pauseVideo() {
+            const video = document.getElementById("uploadedVideo");
+            if (video) {
+                video.pause();
+            }
+        }
+
+        function restartVideo() {
+            const video = document.getElementById("uploadedVideo");
+            if (video) {
+                video.currentTime = 0;
+                video.play().catch((error) => {
+                    console.log("Replay failed:", error);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
