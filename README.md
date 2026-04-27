@@ -65,10 +65,16 @@ Deployment on cloud (Render / AWS)
 👨‍💻 Author
 
 CVV ANAND
+
 B VIKAS
+
 D SANDEEP
+
 C GANESH
+
 M VISHNU VARDHAN
+
+CH YASHWANTH
 
 📜 License
 
